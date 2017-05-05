@@ -1,4 +1,5 @@
 // app.module.js
+import 'jquery';
 import * as angular from 'angular';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './components/components.module';

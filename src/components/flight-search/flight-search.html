@@ -1,3 +1,9 @@
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <span ng-bind-html="match.label.name | uibTypeaheadHighlight:query"></span> - <span>{{match.label.iata}}</span>
+    </a>
+</script>
+
 <form name="$ctrl.flightSearch" ng-submit="$ctrl.serachFlights()" novalidate>
     <div class="row">
         <div class="col-sm-4">
@@ -17,36 +23,51 @@
     </div>
     <div class="row">
         <div class="col-sm-6 form-group"
-             ng-class="{ 'has-error': $ctrl.flightSearch.departureAirport.$touched && $ctrl.flightSearch.departureAirport.$invalid }">
+             ng-class="{ 'has-error': $ctrl.flightSearch.originAirportName.$touched && $ctrl.originAirportName.departureAirport.$invalid }">
             <label class="full-width">
-                Departure Airport
-                <input name="departureAirport"
-                       class="form-control"
+                Origin Airport
+                <input type="text"
+                       name="originAirportName"
+                       ng-model="$ctrl.originAirportName"
                        placeholder="Departure Airport"
-                       ng-model="$ctrl.departureAirport"
                        ng-required="true"
-                       type="text"/>
+                       class="form-control"
+                       typeahead-on-select="$ctrl.selectOrigin($item)"
+                       uib-typeahead="airport.name as airport for airport in $ctrl.flights.getAirportCode($viewValue) | limitTo: 10"
+                       typeahead-template-url="customTemplate.html"
+                       ng-model-options="{updateOn: 'default', debounce: { 'default': 300}}"
+                       typeahead-min-length="3"
+                       typeahead-show-hint="false"
+                       typeahead-focus-first="false">
+
             </label>
             <div class="help-block"
-                 ng-messages="$ctrl.flightSearch.departureAirport.$error"
+                 ng-messages="$ctrl.flightSearch.originAirportName.$error"
                  ng-if="$ctrl.flightSearch.departureAirport.$touched" role="alert">
                 <div ng-message="required">You did not enter a field</div>
             </div>
         </div>
 
         <div class="col-sm-6 form-group"
-             ng-class="{ 'has-error': $ctrl.flightSearch.returnAirport.$touched && $ctrl.flightSearch.returnAirport.$invalid }">
+             ng-class="{ 'has-error': $ctrl.flightSearch.destinationAirportName.$touched && $ctrl.flightSearch.destinationAirportName.$invalid }">
             <label class="full-width">
                 Destination Airport
-                <input name="returnAirport"
-                       ng-model="$ctrl.returnAirport"
+                <input type="text"
+                       name="destinationAirportName"
+                       ng-model="$ctrl.destinationAirportName"
                        class="form-control"
                        placeholder="Return Airport"
                        ng-required="true"
-                       type="text"/>
+                       typeahead-on-select="$ctrl.selectDestination($item)"
+                       uib-typeahead="airport.name as airport for airport in $ctrl.flights.getAirportCode($viewValue) | limitTo: 10"
+                       typeahead-template-url="customTemplate.html"
+                       ng-model-options="{updateOn: 'default', debounce: { 'default': 300}}"
+                       typeahead-min-length="3"
+                       typeahead-show-hint="false"
+                       typeahead-focus-first="false"/>
             </label>
             <div class="help-block"
-                 ng-messages="$ctrl.flightSearch.returnAirport.$error"
+                 ng-messages="$ctrl.flightSearch.destinationAirportName.$error"
                  ng-if="$ctrl.flightSearch.returnAirport.$touched" role="alert">
                 <div ng-message="required">You did not enter a field</div>
             </div>
@@ -62,8 +83,8 @@
                     <input type="text"
                            name="departureDate"
                            class="form-control"
-                           placeholder="dd-mm-yyyy"
-                           uib-datepicker-popup="dd-mm-yyyy"
+                           placeholder="DD-MMM-yyyy"
+                           uib-datepicker-popup="dd-MMMM-yyyy"
                            ng-model="$ctrl.departureDate"
                            is-open="$ctrl.departureDateOpen"
                            show-button-bar="false"
@@ -101,13 +122,13 @@
                            datepicker-options="$ctrl.returnDateOptions"
                            min-date="$ctrl.minReturnDate()"
                            ng-required="$ctrl.travelType === 'roundtrip'"
-                           ng-disabled="$ctrl.canEnterDeparture()"
+                           ng-disabled="$ctrl.travelType !== 'roundtrip' || $ctrl.canEnterDeparture()"
                     />
                     <span class="input-group-btn"
                           ng-class="{ 'has-error': ($ctrl.flightSearch.returnDate.$touched && $ctrl.flightSearch.returnDate.$invalid&& !$ctrl.returnDateOpen) }">
                         <button type="button"
                                 class="btn btn-default"
-                                ng-disabled="$ctrl.canEnterDeparture()"
+                                ng-disabled="$ctrl.travelType !== 'roundtrip' || $ctrl.canEnterDeparture()"
                                 ng-click="$ctrl.openReturnDate()">
                             <i class="glyphicon glyphicon-calendar"></i>
                         </button>
@@ -129,7 +150,7 @@
                 <input class="form-control"
                        type="number"
                        name="numberAdults"
-                       min="1"
+                       min="0"
                        ng-model="$ctrl.numberAdults"
                 >
             </label>
