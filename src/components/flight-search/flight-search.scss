@@ -32,8 +32,8 @@ form {
     }
 }
 
-.glyphicon{
-    &.loading__icon{
+.glyphicon {
+    &.loading__icon {
         position: absolute;
         right: 2em;
         top: 2.2em;
@@ -44,7 +44,8 @@ form {
     animation: rotating 2s linear infinite;
 }
 
-@keyframes rotating /* Safari and Chrome */ {
+@keyframes rotating /* Safari and Chrome */
+{
     from {
         transform: rotate(0deg);
     }
@@ -53,8 +54,7 @@ form {
     }
 }
 
-
-button{
+button {
     &.is-loading {
         .glyphicon-refresh {
             display: inline-block;
