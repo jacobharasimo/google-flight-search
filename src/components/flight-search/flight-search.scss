@@ -1,0 +1,33 @@
+@import '../../styles/variables';
+
+.full-width {
+    width: 100%;
+}
+
+.inline-block {
+    display: inline-block !important;
+}
+
+form {
+    .help-block {
+        color: $state-danger-text;
+    }
+}
+
+.has-error {
+    color: $state-danger-text;
+    &.input-group-btn {
+        button {
+            border-color: $state-danger-text;
+        }
+    }
+    label {
+        color: $state-danger-text;
+    }
+}
+
+.input-group-btn {
+    button {
+        padding: 6.5px 12px;
+    }
+}

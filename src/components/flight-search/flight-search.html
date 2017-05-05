@@ -1,0 +1,173 @@
+<form name="$ctrl.flightSearch" ng-submit="$ctrl.serachFlights()" novalidate>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="radio inline-block">
+                <label>
+                    <input type="radio" value="oneway" ng-model="$ctrl.travelType">
+                    One Way
+                </label>
+            </div>
+            <div class="radio inline-block">
+                <label>
+                    <input type="radio" value="roundtrip" ng-model="$ctrl.travelType">
+                    Round Trip
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 form-group"
+             ng-class="{ 'has-error': $ctrl.flightSearch.departureAirport.$touched && $ctrl.flightSearch.departureAirport.$invalid }">
+            <label class="full-width">
+                Departure Airport
+                <input name="departureAirport"
+                       class="form-control"
+                       placeholder="Departure Airport"
+                       ng-model="$ctrl.departureAirport"
+                       ng-required="true"
+                       type="text"/>
+            </label>
+            <div class="help-block"
+                 ng-messages="$ctrl.flightSearch.departureAirport.$error"
+                 ng-if="$ctrl.flightSearch.departureAirport.$touched" role="alert">
+                <div ng-message="required">You did not enter a field</div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 form-group"
+             ng-class="{ 'has-error': $ctrl.flightSearch.returnAirport.$touched && $ctrl.flightSearch.returnAirport.$invalid }">
+            <label class="full-width">
+                Destination Airport
+                <input name="returnAirport"
+                       ng-model="$ctrl.returnAirport"
+                       class="form-control"
+                       placeholder="Return Airport"
+                       ng-required="true"
+                       type="text"/>
+            </label>
+            <div class="help-block"
+                 ng-messages="$ctrl.flightSearch.returnAirport.$error"
+                 ng-if="$ctrl.flightSearch.returnAirport.$touched" role="alert">
+                <div ng-message="required">You did not enter a field</div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 form-group"
+             ng-class="{ 'has-error': $ctrl.flightSearch.departureDate.$touched && $ctrl.flightSearch.departureDate.$invalid && !$ctrl.departureDateOpen}">
+            <label class="full-width">
+                Departure Date
+                <span class="input-group">
+                    <input type="text"
+                           name="departureDate"
+                           class="form-control"
+                           placeholder="dd-mm-yyyy"
+                           uib-datepicker-popup="dd-mm-yyyy"
+                           ng-model="$ctrl.departureDate"
+                           is-open="$ctrl.departureDateOpen"
+                           show-button-bar="false"
+                           datepicker-options="$ctrl.dateOptions"
+                           ng-required="true"
+                    />
+                    <span class="input-group-btn"
+                          ng-class="{ 'has-error': $ctrl.flightSearch.departureDate.$touched && $ctrl.flightSearch.departureDate.$invalid && !$ctrl.departureDateOpen}">
+                        <button type="button" class="btn btn-default" ng-click="$ctrl.openDepartureDate()">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </span>
+            </label>
+            <div class="help-block"
+                 ng-messages="$ctrl.flightSearch.departureDate.$error"
+                 ng-if="$ctrl.flightSearch.departureDate.$touched && !$ctrl.departureDateOpen" role="alert">
+                <div ng-message="required">You did not enter a field</div>
+            </div>
+
+        </div>
+        <div class="col-sm-6 form-group">
+            <label class="full-width"
+                   ng-class="{ 'has-error': ($ctrl.flightSearch.returnDate.$touched && $ctrl.flightSearch.returnDate.$invalid && !$ctrl.returnDateOpen) }">
+                Return Date
+                <span class="input-group">
+                    <input type="text"
+                           name="returnDate"
+                           class="form-control"
+                           placeholder="dd-mm-yyyy"
+                           uib-datepicker-popup="dd-mm-yyyy"
+                           ng-model="$ctrl.returnDate"
+                           is-open="$ctrl.returnDateOpen"
+                           show-button-bar="false"
+                           datepicker-options="$ctrl.returnDateOptions"
+                           min-date="$ctrl.minReturnDate()"
+                           ng-required="$ctrl.travelType === 'roundtrip'"
+                           ng-disabled="$ctrl.canEnterDeparture()"
+                    />
+                    <span class="input-group-btn"
+                          ng-class="{ 'has-error': ($ctrl.flightSearch.returnDate.$touched && $ctrl.flightSearch.returnDate.$invalid&& !$ctrl.returnDateOpen) }">
+                        <button type="button"
+                                class="btn btn-default"
+                                ng-disabled="$ctrl.canEnterDeparture()"
+                                ng-click="$ctrl.openReturnDate()">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </span>
+            </label>
+            <div class="help-block"
+                 ng-messages="$ctrl.flightSearch.returnDate.$error"
+                 ng-if="$ctrl.flightSearch.returnDate.$touched && !$ctrl.returnDateOpen" role="alert">
+                <div ng-message="required">You did not enter a field</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 form-group">
+            <label class="full-width">
+                Number of adults
+                <input class="form-control"
+                       type="number"
+                       name="numberAdults"
+                       min="1"
+                       ng-model="$ctrl.numberAdults"
+                >
+            </label>
+        </div>
+
+        <div class="col-sm-4 form-group">
+            <label class="full-width">
+                Number of children
+                <input class="form-control"
+                       type="number"
+                       name="numberChildren"
+                       ng-model="$ctrl.numberChildren"
+                       min="0"
+                >
+            </label>
+        </div>
+
+        <div class="col-sm-4 form-group">
+            <label class="full-width">
+                Number of Infants
+                <input class="form-control"
+                       type="number"
+                       name="numberInfants"
+                       ng-model="$ctrl.numberInfants"
+                       min="0"
+                >
+            </label>
+        </div>
+
+        <div class="help-block col-sm-12 text-center"
+             ng-if="$ctrl.flightSearch.numberAdults.$touched || $ctrl.flightSearch.numberChildren.$touched || $ctrl.flightSearch.numberInfants.$touched">
+            <div ng-if="!$ctrl.isValidPassangers()">You must have at least one passenger</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary pull-right">Submit</button>
+        </div>
+    </div>
+</form>
