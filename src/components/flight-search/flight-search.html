@@ -4,7 +4,9 @@
     </a>
 </script>
 
-<form name="$ctrl.flightSearch" ng-submit="$ctrl.serachFlights()" novalidate>
+<form name="$ctrl.flightSearch"
+      ng-submit="$ctrl.serachFlights()" novalidate
+      promise-btn>
     <div class="row">
         <div class="col-sm-4">
             <div class="radio inline-block">
@@ -192,7 +194,9 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <button type="submit" class="btn btn-primary pull-right">Submit</button>
+            <button type="submit"
+                    class="btn btn-primary pull-right">Submit
+            </button>
         </div>
     </div>
 </form>

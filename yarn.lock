@@ -158,6 +158,12 @@ angular-mocks@~1.5.10:
   version "1.5.11"
   resolved "https://registry.yarnpkg.com/angular-mocks/-/angular-mocks-1.5.11.tgz#a0e1dd0ea55fd77ee7a757d75536c5e964c86f81"
 
+angular-promise-buttons@^0.1.20:
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/angular-promise-buttons/-/angular-promise-buttons-0.1.20.tgz#1fbdaac90758cec055010693ca57d79beda57a9b"
+  dependencies:
+    angular ">=1.3.0 <=1.7.0"
+
 angular-ui-bootstrap@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/angular-ui-bootstrap/-/angular-ui-bootstrap-2.5.0.tgz#2facefb915386655dc5f44150258032517236d01"
@@ -168,7 +174,7 @@ angular-ui-router@~0.4.0:
   dependencies:
     angular "^1.0.8"
 
-angular@^1.0.8, angular@~1.5.10:
+"angular@>=1.3.0 <=1.7.0", angular@^1.0.8, angular@~1.5.10:
   version "1.5.11"
   resolved "https://registry.yarnpkg.com/angular/-/angular-1.5.11.tgz#8c5ba7386f15965c9acf3429f6881553aada30d6"
 

@@ -52,3 +52,15 @@ form {
         transform: rotate(360deg);
     }
 }
+
+
+button{
+    &.is-loading {
+        .glyphicon-refresh {
+            display: inline-block;
+        }
+    }
+    .glyphicon-refresh {
+        display: none;
+    }
+}
