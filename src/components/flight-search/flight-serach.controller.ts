@@ -16,7 +16,7 @@ export class FlightSearch implements ng.IController {
     travelType: string;
     numberInfants: number = 0;
     numberChildren: number = 0;
-    numberAdults: number = 0;
+    numberAdults: number = 1;
     destinationAirportName: string;
     originAirportName: string;
 

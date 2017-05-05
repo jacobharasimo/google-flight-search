@@ -1,50 +1,58 @@
 <h2>Flight Results</h2>
-<uib-accordion close-others="oneAtATime">
-    <div uib-accordion-group
-         ng-repeat="flight in $ctrl.flights.flightList track by $index"
-         class="panel-default"
-         is-open="status.isCustomHeaderOpen">
-        <uib-accordion-heading>
-            <div class="row">
-                <div class="col-sm-4">
-                    From: <strong>{{$ctrl.flights.originAirport.name}}</strong><br/>
-                    To: <strong>{{$ctrl.flights.destinationAirport.name}}</strong>
-                </div>
-                <div class="col-sm-4">
-                    Connections: {{flight.slice[0].segment.length}}<br/>
-                    Duration: {{flight.slice[0].duration |minutesToDuration}}
-                </div>
-                <div class="col-sm-4">
-                    Total: <strong>{{flight.pricing[0].saleTotal}}</strong>
-                    <small>(taxes included)</small>
-                </div>
-                <i class="pull-right glyphicon"
-                   ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
 
-            </div>
-        </uib-accordion-heading>
-
-        <div class="row" ng-repeat="segment in flight.slice[0].segment">
-            <div class="col-sm-6">
-                Flight Number: {{segment.flight.carrier}}-{{segment.flight.number}}<br/>
-                origin: {{segment.leg[0].origin}}<br/>
-                departureTime: {{segment.leg[0].departureTime | date : 'dd-MMM-yyyy h:mm:a'}}<br/>
-            </div>
-            <div class="col-sm-6">
-                duration: {{segment.duration}}<br/>
-                destination: {{segment.leg[0].destination}}<br/>
-                arrivalTime: {{segment.leg[0].arrivalTime | date : 'dd-MMM-yyyy h:mm:a'}}<br/>
-            </div>
-            <div class="col-sm-12">
-                <hr/>
-            </div>
+<div ng-repeat="flight in $ctrl.flights.flightList track by $index">
+    <div class="row">
+        <div class="col-sm-6">
+            From: <strong>{{$ctrl.flights.originAirport.name}}</strong><br/>
+            To: <strong>{{$ctrl.flights.destinationAirport.name}}</strong>
         </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <p class="text-right">Base Price:{{flight.pricing[0].baseFareTotal}}</br>
-                    Tax:{{flight.pricing[0].saleTaxTotal}}</br>
-                    Total:{{flight.pricing[0].saleTotal}}</p>
-            </div>
+        <div class="col-sm-6">
+            Total: <strong>{{flight.pricing[0].saleTotal}}</strong>
+            <small>(taxes included)</small>
         </div>
     </div>
-</uib-accordion>
+    <uib-accordion close-others="oneAtATime">
+        <div uib-accordion-group
+             class="panel-default"
+             ng-repeat="slice in flight.slice"
+             is-open="status.isCustomHeaderOpen">
+            <uib-accordion-heading>
+                <div class="row">
+                    <div class="col-sm-6">
+                        Duration: {{slice.duration |minutesToDuration}}
+                    </div>
+                    <div class="col-sm-6">
+                        Connections: {{slice.segment.length}}<br/>
+
+                    </div>
+                    <i class="pull-right glyphicon"
+                       ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+
+                </div>
+            </uib-accordion-heading>
+
+            <div class="row" ng-repeat="segment in slice.segment">
+                <div class="col-sm-6">
+                    Flight Number: {{segment.flight.carrier}}-{{segment.flight.number}}<br/>
+                    origin: {{segment.leg[0].origin}}<br/>
+                    departure Time: {{segment.leg[0].departureTime | date : 'dd-MMM-yyyy h:mm:a'}}<br/>
+                </div>
+                <div class="col-sm-6">
+                    duration: {{segment.duration}}<br/>
+                    destination: {{segment.leg[0].destination}}<br/>
+                    arrival Time: {{segment.leg[0].arrivalTime | date : 'dd-MMM-yyyy h:mm:a'}}<br/>
+                </div>
+                <div class="col-sm-12">
+                    <hr/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <p class="text-right">Base Price:{{flight.pricing[0].baseFareTotal}}</br>
+                        Tax:{{flight.pricing[0].saleTaxTotal}}</br>
+                        Total:{{flight.pricing[0].saleTotal}}</p>
+                </div>
+            </div>
+        </div>
+    </uib-accordion>
+</div>
