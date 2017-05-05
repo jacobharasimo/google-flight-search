@@ -1,0 +1,8 @@
+<div class="container">
+    <div class="jumbotron" ng-class="{'col-sm-4 shrink-inner':$ctrl.resultsFound()}">
+        <flight-search></flight-search>
+    </div>
+    <div class="col-sm-7 pull-right" ng-if="$ctrl.resultsFound()">
+        <flight-results></flight-results>
+    </div>
+</div>

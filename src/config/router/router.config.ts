@@ -1,3 +1,4 @@
+import {Search} from '../../components/serach/search.controller';
 export class RouterConfig {
     public static $inject = [
         '$stateProvider',
@@ -15,12 +16,9 @@ export class RouterConfig {
                 url: '/',
                 views: {
                     'content@': {
-                        template: `      
-                            <div class="container" >
-                                <div class="jumbotron">
-                                    <flight-search></flight-search>
-                                  </div>
-                            </div>`
+                        template: require('../../components/serach/search.html'),
+                        controller: Search,
+                        controllerAs: '$ctrl'
                     }
                 }
             })

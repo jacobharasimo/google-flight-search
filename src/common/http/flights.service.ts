@@ -1,13 +1,14 @@
-// google api: AIzaSyD9Dk_obrRm51Mke2h1L37Dy5b_Q-YryOg
-// POST: https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyD9Dk_obrRm51Mke2h1L37Dy5b_Q-YryOg
 export interface IFlights {
+    flightList: any[];
+    destinationAirport: IIata;
+    originAirport: IIata;
     searchFlights(payload: IQxpExpress): ng.IPromise<any>;
     getAirportCode(val): any;
 }
 export interface IIata {
-    name: string;
-    city: string;
-    iata: string;
+    name?: string;
+    city?: string;
+    iata?: string;
 }
 export interface IQxpExpressSlice {
     origin: string;
@@ -23,11 +24,16 @@ export interface IQxpExpress {
         },
         slice?: IQxpExpressSlice[]
     };
+    solutions: number;
 }
 export class Flights implements IFlights {
     static $inject = [
         '$http'
     ];
+    flightList = [];
+    destinationAirport: IIata = {};
+    originAirport: IIata = {};
+    readonly googleKey = 'AIzaSyD_SX_fQV1MQYDJbgoJA4LNN3dKMj_u9Tw';
 
     constructor(public $http: ng.IHttpService) {
     }
@@ -50,7 +56,6 @@ export class Flights implements IFlights {
         })
             .then((response) => {
                 const results = (response.data as any).airports;
-                console.log(results);
                 return results;
             });
     }
@@ -58,8 +63,11 @@ export class Flights implements IFlights {
     searchFlights(payload: IQxpExpress) {
         return this.$http({
             method: 'POST',
-            url: 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyD9Dk_obrRm51Mke2h1L37Dy5b_Q-YryOg',
+            url: 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=' + this.googleKey,
             data: payload
+        }).then((response: any) => {
+            this.flightList = response.data.trips.tripOption;
+            return response.data.trips.tripOption;
         });
     }
 }

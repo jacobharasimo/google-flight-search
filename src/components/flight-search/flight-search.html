@@ -25,7 +25,7 @@
     </div>
     <div class="row">
         <div class="col-sm-6 form-group"
-             ng-class="{ 'has-error': $ctrl.flightSearch.originAirportName.$touched && $ctrl.originAirportName.departureAirport.$invalid }">
+             ng-class="{ 'has-error': $ctrl.flightSearch.originAirportName.$dirty && $ctrl.flightSearch.originAirportName.$invalid }">
             <label class="full-width">
                 Origin Airport
                 <input type="text"
@@ -46,13 +46,13 @@
             </label>
             <div class="help-block"
                  ng-messages="$ctrl.flightSearch.originAirportName.$error"
-                 ng-if="$ctrl.flightSearch.departureAirport.$touched" role="alert">
+                 ng-if="$ctrl.flightSearch.originAirportName.$dirty" role="alert">
                 <div ng-message="required">You did not enter a field</div>
             </div>
         </div>
 
         <div class="col-sm-6 form-group"
-             ng-class="{ 'has-error': $ctrl.flightSearch.destinationAirportName.$touched && $ctrl.flightSearch.destinationAirportName.$invalid }">
+             ng-class="{ 'has-error': $ctrl.flightSearch.destinationAirportName.$dirty && $ctrl.flightSearch.destinationAirportName.$invalid }">
             <label class="full-width">
                 Destination Airport
                 <input type="text"
@@ -74,7 +74,7 @@
             </label>
             <div class="help-block"
                  ng-messages="$ctrl.flightSearch.destinationAirportName.$error"
-                 ng-if="$ctrl.flightSearch.returnAirport.$touched" role="alert">
+                 ng-if="$ctrl.flightSearch.returnAirport.$dirty" role="alert">
                 <div ng-message="required">You did not enter a field</div>
             </div>
 
@@ -82,7 +82,7 @@
     </div>
     <div class="row">
         <div class="col-sm-6 form-group"
-             ng-class="{ 'has-error': $ctrl.flightSearch.departureDate.$touched && $ctrl.flightSearch.departureDate.$invalid && !$ctrl.departureDateOpen}">
+             ng-class="{ 'has-error': $ctrl.flightSearch.departureDate.$dirty && $ctrl.flightSearch.departureDate.$invalid && !$ctrl.departureDateOpen}">
             <label class="full-width">
                 Departure Date
                 <span class="input-group">
@@ -98,7 +98,7 @@
                            ng-required="true"
                     />
                     <span class="input-group-btn"
-                          ng-class="{ 'has-error': $ctrl.flightSearch.departureDate.$touched && $ctrl.flightSearch.departureDate.$invalid && !$ctrl.departureDateOpen}">
+                          ng-class="{ 'has-error': $ctrl.flightSearch.departureDate.$dirty && $ctrl.flightSearch.departureDate.$invalid && !$ctrl.departureDateOpen}">
                         <button type="button" class="btn btn-default" ng-click="$ctrl.openDepartureDate()">
                             <i class="glyphicon glyphicon-calendar"></i>
                         </button>
@@ -107,14 +107,14 @@
             </label>
             <div class="help-block"
                  ng-messages="$ctrl.flightSearch.departureDate.$error"
-                 ng-if="$ctrl.flightSearch.departureDate.$touched && !$ctrl.departureDateOpen" role="alert">
+                 ng-if="$ctrl.flightSearch.departureDate.$dirty && !$ctrl.departureDateOpen" role="alert">
                 <div ng-message="required">You did not enter a field</div>
             </div>
 
         </div>
         <div class="col-sm-6 form-group">
             <label class="full-width"
-                   ng-class="{ 'has-error': ($ctrl.flightSearch.returnDate.$touched && $ctrl.flightSearch.returnDate.$invalid && !$ctrl.returnDateOpen) }">
+                   ng-class="{ 'has-error': ($ctrl.flightSearch.returnDate.$dirty && $ctrl.flightSearch.returnDate.$invalid && !$ctrl.returnDateOpen) }">
                 Return Date
                 <span class="input-group">
                     <input type="text"
@@ -131,7 +131,7 @@
                            ng-disabled="$ctrl.travelType !== 'roundtrip' || $ctrl.canEnterDeparture()"
                     />
                     <span class="input-group-btn"
-                          ng-class="{ 'has-error': ($ctrl.flightSearch.returnDate.$touched && $ctrl.flightSearch.returnDate.$invalid&& !$ctrl.returnDateOpen) }">
+                          ng-class="{ 'has-error': ($ctrl.flightSearch.returnDate.$dirty && $ctrl.flightSearch.returnDate.$invalid&& !$ctrl.returnDateOpen) }">
                         <button type="button"
                                 class="btn btn-default"
                                 ng-disabled="$ctrl.travelType !== 'roundtrip' || $ctrl.canEnterDeparture()"
@@ -143,7 +143,7 @@
             </label>
             <div class="help-block"
                  ng-messages="$ctrl.flightSearch.returnDate.$error"
-                 ng-if="$ctrl.flightSearch.returnDate.$touched && !$ctrl.returnDateOpen" role="alert">
+                 ng-if="$ctrl.flightSearch.returnDate.$dirty && !$ctrl.returnDateOpen" role="alert">
                 <div ng-message="required">You did not enter a field</div>
             </div>
         </div>
@@ -158,6 +158,7 @@
                        name="numberAdults"
                        min="0"
                        ng-model="$ctrl.numberAdults"
+                       ng-required
                 >
             </label>
         </div>
@@ -170,6 +171,7 @@
                        name="numberChildren"
                        ng-model="$ctrl.numberChildren"
                        min="0"
+                       ng-required
                 >
             </label>
         </div>
@@ -182,13 +184,12 @@
                        name="numberInfants"
                        ng-model="$ctrl.numberInfants"
                        min="0"
-                >
+                       ng-required/>
             </label>
         </div>
-
         <div class="help-block col-sm-12 text-center"
-             ng-if="$ctrl.flightSearch.numberAdults.$touched || $ctrl.flightSearch.numberChildren.$touched || $ctrl.flightSearch.numberInfants.$touched">
-            <div ng-if="!$ctrl.isValidPassangers()">You must have at least one passenger</div>
+             ng-if="($ctrl.flightSearch.numberAdults.$dirty || $ctrl.flightSearch.numberChildren.$dirty || $ctrl.flightSearch.numberInfants.$dirty) && !$ctrl.isValidPassengers()">
+            <div ng-if="!$ctrl.isValidPassengers()">You must have at least one passenger</div>
         </div>
     </div>
 

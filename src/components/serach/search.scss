@@ -1,0 +1,11 @@
+.shrink-inner {
+    position: fixed !important;
+    top: 0 !important;
+    padding: .5em 1em !important;
+    .col-sm-6 {
+        width: 100%;
+    }
+    .col-sm-4 {
+        width: 100%;
+    }
+}
