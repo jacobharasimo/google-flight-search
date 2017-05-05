@@ -31,3 +31,24 @@ form {
         padding: 6.5px 12px;
     }
 }
+
+.glyphicon{
+    &.loading__icon{
+        position: absolute;
+        right: 2em;
+        top: 2.2em;
+    }
+}
+
+.rotating {
+    animation: rotating 2s linear infinite;
+}
+
+@keyframes rotating /* Safari and Chrome */ {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -38,8 +38,9 @@
                        ng-model-options="{updateOn: 'default', debounce: { 'default': 300}}"
                        typeahead-min-length="3"
                        typeahead-show-hint="false"
-                       typeahead-focus-first="false">
-
+                       typeahead-loading="$ctrl.isOriginLoading"/>
+                <span ng-show="$ctrl.isOriginLoading" class="rotating loading__icon glyphicon glyphicon-refresh"
+                      aria-hidden="true"></span>
             </label>
             <div class="help-block"
                  ng-messages="$ctrl.flightSearch.originAirportName.$error"
@@ -64,7 +65,10 @@
                        ng-model-options="{updateOn: 'default', debounce: { 'default': 300}}"
                        typeahead-min-length="3"
                        typeahead-show-hint="false"
-                       typeahead-focus-first="false"/>
+                       typeahead-loading=" $ctrl.isDestinationLoading"/>
+                <span ng-show="$ctrl.isDestinationLoading" class="rotating loading__icon glyphicon glyphicon-refresh"
+                      aria-hidden="true"></span>
+
             </label>
             <div class="help-block"
                  ng-messages="$ctrl.flightSearch.destinationAirportName.$error"

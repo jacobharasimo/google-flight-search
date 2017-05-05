@@ -3,9 +3,7 @@
 import {IFlights, IIata, IQxpExpress, IQxpExpressSlice} from '../../common/http/flights.service';
 export class FlightSearch implements ng.IController {
     static $inject = [
-        '$log',
-        'flights',
-        '$http'
+        'flights'
     ];
     departureDateOpen: boolean;
     departureDate: Date;
@@ -14,7 +12,7 @@ export class FlightSearch implements ng.IController {
     dateOptions: ng.ui.bootstrap.IDatepickerConfig;
     returnDateOptions: ng.ui.bootstrap.IDatepickerConfig;
 
-    flightSearch: any; // ng.IFormController;
+    flightSearch: ng.IFormController;
     travelType: string;
     numberInfants: number = 0;
     numberChildren: number = 0;
@@ -24,8 +22,7 @@ export class FlightSearch implements ng.IController {
     originAirportName: string;
     originAirport: IIata;
 
-    constructor(public $log: ng.ILogService,
-                public flights: IFlights) {
+    constructor(public flights: IFlights) {
         const today = new Date();
         const year = today.getFullYear();
         const month = today.getMonth();
