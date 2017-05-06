@@ -1,19 +1,21 @@
 <h2>Flight Results</h2>
 
-<div ng-repeat="flight in $ctrl.flights.flightList track by $index">
+<div class="well well-sm" ng-repeat="flight in $ctrl.flights.flightList track by $index">
     <div class="row">
         <div class="col-sm-6">
             From: <strong>{{$ctrl.flights.originAirport.name}}</strong><br/>
             To: <strong>{{$ctrl.flights.destinationAirport.name}}</strong>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-3 pull-right text-right hover-pointer"
+             uib-tooltip-html="'<div class=\'text-right\'>Price: {{flight.pricing[0].baseFareTotal}}</br>Tax: {{flight.pricing[0].saleTaxTotal}}</br>Total: {{flight.pricing[0].saleTotal}}</div>
+'">
             Total: <strong>{{flight.pricing[0].saleTotal}}</strong>
-            <small>(taxes included)</small>
+            <small class="block">(taxes included)</small>
         </div>
     </div>
     <uib-accordion close-others="oneAtATime">
         <div uib-accordion-group
-             class="panel-default"
+             class="panel-default panel-light"
              ng-repeat="slice in flight.slice"
              is-open="status.isCustomHeaderOpen">
             <uib-accordion-heading>
@@ -22,8 +24,7 @@
                         Duration: {{slice.duration |minutesToDuration}}
                     </div>
                     <div class="col-sm-6">
-                        Connections: {{slice.segment.length}}<br/>
-
+                        Connections: {{slice.segment.length}}
                     </div>
                     <i class="pull-right glyphicon"
                        ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
@@ -34,23 +35,16 @@
             <div class="row" ng-repeat="segment in slice.segment">
                 <div class="col-sm-6">
                     Flight Number: {{segment.flight.carrier}}-{{segment.flight.number}}<br/>
-                    origin: {{segment.leg[0].origin}}<br/>
-                    departure Time: {{segment.leg[0].departureTime | date : 'dd-MMM-yyyy h:mm:a'}}<br/>
+                    Origin: {{segment.leg[0].origin}}<br/>
+                    Departure Time: {{segment.leg[0].departureTime | date : 'MMM dd, yyyy h:mm:a'}}<br/>
                 </div>
                 <div class="col-sm-6">
-                    duration: {{segment.duration}}<br/>
-                    destination: {{segment.leg[0].destination}}<br/>
-                    arrival Time: {{segment.leg[0].arrivalTime | date : 'dd-MMM-yyyy h:mm:a'}}<br/>
+                    Duration: {{segment.duration|minutesToDuration}}<br/>
+                    Destination: {{segment.leg[0].destination}}<br/>
+                    Arrival Time: {{segment.leg[0].arrivalTime | date : 'MMM dd, yyyy h:mm:a'}}<br/>
                 </div>
-                <div class="col-sm-12">
-                    <hr/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <p class="text-right">Base Price:{{flight.pricing[0].baseFareTotal}}</br>
-                        Tax:{{flight.pricing[0].saleTaxTotal}}</br>
-                        Total:{{flight.pricing[0].saleTotal}}</p>
+                <div class="col-sm-12" ng-if="!$last">
+                    <br/>
                 </div>
             </div>
         </div>

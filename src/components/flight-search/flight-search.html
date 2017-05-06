@@ -37,7 +37,8 @@
                        typeahead-on-select="$ctrl.selectOrigin($item)"
                        uib-typeahead="airport.name as airport for airport in $ctrl.flights.getAirportCode($viewValue) | limitTo: 10"
                        typeahead-template-url="customTemplate.html"
-                       ng-model-options="{updateOn: 'default', debounce: { 'default': 300}}"
+                       ng-model-options="{updateOn: 'default', debounce: { 'default': 500}}"
+                       ng-minlength="3"
                        typeahead-min-length="3"
                        typeahead-show-hint="false"
                        typeahead-loading="$ctrl.isOriginLoading"/>
@@ -46,8 +47,10 @@
             </label>
             <div class="help-block"
                  ng-messages="$ctrl.flightSearch.originAirportName.$error"
-                 ng-if="$ctrl.flightSearch.originAirportName.$dirty" role="alert">
+                 ng-if="$ctrl.flightSearch.originAirportName.$dirty && $ctrl.flightSearch.originAirportName.$error" role="alert">
                 <div ng-message="required">You did not enter a field</div>
+                <div ng-message="minlength">Enter 3 or more characters</div>
+
             </div>
         </div>
 
@@ -64,7 +67,8 @@
                        typeahead-on-select="$ctrl.selectDestination($item)"
                        uib-typeahead="airport.name as airport for airport in $ctrl.flights.getAirportCode($viewValue) | limitTo: 10"
                        typeahead-template-url="customTemplate.html"
-                       ng-model-options="{updateOn: 'default', debounce: { 'default': 300}}"
+                       ng-model-options="{updateOn: 'default', debounce: { 'default': 500}}"
+                       ng-minlength="3"
                        typeahead-min-length="3"
                        typeahead-show-hint="false"
                        typeahead-loading=" $ctrl.isDestinationLoading"/>
@@ -74,8 +78,9 @@
             </label>
             <div class="help-block"
                  ng-messages="$ctrl.flightSearch.destinationAirportName.$error"
-                 ng-if="$ctrl.flightSearch.returnAirport.$dirty" role="alert">
+                 ng-if="$ctrl.flightSearch.returnAirport.$dirty && $ctrl.flightSearch.returnAirport.$error" role="alert">
                 <div ng-message="required">You did not enter a field</div>
+                <div ng-message="minlength">Enter 3 or more characters</div>
             </div>
 
         </div>
